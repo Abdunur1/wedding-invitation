@@ -1,103 +1,183 @@
-
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ky">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Свадебное приглашение</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fffaf9;
-      color: #333;
-      text-align: center;
-    }
-    header {
-      background: linear-gradient(135deg, #ffe6e6, #ffe0f0);
-      padding: 40px 20px;
-    }
-    h1 {
-      font-size: 2.8em;
-      margin: 0;
-    }
-    h2 {
-      margin-top: 10px;
-      font-weight: normal;
-      font-size: 1.6em;
-      color: #a94442;
-    }
-    .section {
-      padding: 30px 20px;
-    }
-    .section h3 {
-      font-size: 1.4em;
-      color: #a94442;
-    }
-    .info p {
-      font-size: 1.2em;
-    }
-    form input, form button {
-      padding: 10px;
-      font-size: 1em;
-      margin: 10px 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    form button {
-      background-color: #a94442;
-      color: white;
-      cursor: pointer;
-    }
-    .stickers {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .stickers img {
-      width: 120px;
-      height: 120px;
-      border-radius: 20px;
-      animation: spin 12s linear infinite;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Үйлөнүү майрамы чакыруусу</title>
+
+<!-- Подключаем Roboto -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+<style>
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #fff0f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #444;
+  }
+  .container {
+    background: white;
+    padding: 30px 35px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    width: 380px;
+    text-align: center;
+  }
+  h1 {
+    color: #b35c7a;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+  label {
+    display: block;
+    margin: 15px 0 6px;
+    font-weight: 500;
+    color: #666;
+    text-align: left;
+    font-size: 16px;
+  }
+  input[type="text"], input[type="tel"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1.8px solid #ccc;
+    font-size: 17px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus, input[type="tel"]:focus {
+    outline: none;
+    border-color: #b35c7a;
+    box-shadow: 0 0 8px rgba(179, 92, 122, 0.3);
+  }
+  button {
+    margin-top: 28px;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 10px;
+    background-color: #b35c7a;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #993f5c;
+  }
+  #invitation-screen {
+    display: none;
+  }
+  .greeting-text {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #333;
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+  /* Таймер круглый */
+  .timer-circle {
+    margin: 35px auto 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 10px solid rgba(179, 92, 122, 0.3);
+    position: relative;
+    font-weight: 700;
+    font-size: 22px;
+    color: #b35c7a;
+    line-height: 150px;
+    user-select: none;
+  }
+  .timer-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Алексей и Мария</h1>
-    <h2>Приглашают вас на свадьбу!</h2>
-  </header>
 
-  <div class="section info">
-    <h3>Дата</h3>
-    <p>15 августа 2025 года</p>
+<div class="container" id="form-screen">
+  <h1>Маалыматтарды киргизиңиз</h1>
+  <form id="invite-form">
+    <label for="guestName1">Сиздин атыңыз:</label>
+    <input type="text" id="guestName1" name="guestName1" placeholder="Атыңызды жазыңыз" required />
 
-    <h3>Место</h3>
-    <p>г. Москва, ул. Примерная, д. 10, ресторан "Счастье"</p>
+    <label for="guestName2">Сиздин жубайыңыздын аты:</label>
+    <input type="text" id="guestName2" name="guestName2" placeholder="Жубайыңыздын атын жазыңыз" required />
+
+    <label for="guestPhone">Телефон номериңиз:</label>
+    <input type="tel" id="guestPhone" name="guestPhone" placeholder="+996 ..." pattern="\+996[0-9]{6,9}" value="+996" required />
+
+    <button type="submit">Чакыруу алуу</button>
+  </form>
+</div>
+
+<div class="container" id="invitation-screen">
+  <h1>Чакыруу</h1>
+  <div class="greeting-text" id="greeting"></div>
+  <div class="timer-circle" id="timer">
+    <div class="timer-text" id="timer-text">-- күн</div>
   </div>
+</div>
 
-  <div class="section">
-    <h3>Подтвердите присутствие</h3>
-    <form onsubmit="event.preventDefault(); alert('Спасибо за подтверждение, ' + this.name.value + '!');">
-      <input type="text" name="name" placeholder="Ваше имя" required />
-      <button type="submit">Подтвердить</button>
-    </form>
-  </div>
+<script>
+  const formScreen = document.getElementById('form-screen');
+  const inviteForm = document.getElementById('invite-form');
+  const invitationScreen = document.getElementById('invitation-screen');
+  const greetingDiv = document.getElementById('greeting');
+  const timerText = document.getElementById('timer-text');
 
-  <div class="section">
-    <h3>Немного любви 💕</h3>
-    <div class="stickers">
-      <img src="https://i.imgur.com/5Y7C3dE.png" alt="sticker1">
-      <img src="https://i.imgur.com/UYiroysl.jpg" alt="sticker2">
-      <img src="https://i.imgur.com/MPxpv4c.jpg" alt="sticker3">
-    </div>
-  </div>
+  const brideName = "Улара";
+  const groomName = "Мухаммед-Али";
+  const weddingDate = new Date("2025-06-20T00:00:00");
+
+  inviteForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const guestName1 = document.getElementById('guestName1').value.trim();
+    const guestName2 = document.getElementById('guestName2').value.trim();
+    const guestPhone = document.getElementById('guestPhone').value.trim();
+
+    const greetingText = 
+      `Урматтуу ${guestName1} жана ${guestName2},\n\n` +
+      `${brideName} жана ${groomName} сизди өзүнүн үйлөнүү майрамына чакырышат!\n\n` +
+      `Майрам 20-июнь 2025-жылы өткөрүлөт.\n` +
+      `Биз менен бирге болууга кубанычтабыз!`;
+
+    greetingDiv.textContent = greetingText;
+
+    formScreen.style.display = 'none';
+    invitationScreen.style.display = 'block';
+
+    startTimer();
+  });
+
+  function startTimer() {
+    function updateTimer() {
+      const now = new Date();
+      const diff = weddingDate - now;
+      if(diff <= 0) {
+        timerText.textContent = "Майрам башталды!";
+        clearInterval(timerInterval);
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      timerText.textContent = days + " күн калды";
+    }
+    updateTimer();
+    const timerInterval = setInterval(updateTimer, 1000 * 60 * 60); // Обновлять каждый час
+  }
+</script>
+
 </body>
 </html>
